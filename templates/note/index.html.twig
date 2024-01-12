@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Note index{% endblock %}
+
+{% block stylesheets %}
+    <style>
+
+        body {
+            background-color: #8A8986 !important; /* Remplacez par la couleur de fond souhaitÃ©e */
+        }
+    
+        .note-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .note-card {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+        }
+
+        .note-card h2 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .note-card p {
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .note-actions a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+            /* Styles pour les boutons */
+        .custom-button {
+            background-color: white;
+            text-color: black;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            margin: 5px;
+            font-size: 14px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .custom-button:hover {
+            background-color: grey;
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>NOTE</h1>
+
+    <div class="note-container">
+        {% for note in notes %}
+            <div class="note-card">
+                <h2>{{ note.title }}</h2>
+                <p>{{ note.content }}</p>
+                <td>{{ note.CreatedAt ? note.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <div class="note-actions">
+                    <a href="{{ path('app_note_show', {'id': note.id}) }}" class="custom-button">show</a>
+                    <a href="{{ path('app_note_edit', {'id': note.id}) }}" class="custom-button">edit</a>
+                </div>
+            </div>
+        {% else %}
+            <p>No records found</p>
+        {% endfor %}
+    </div>
+
+    <a href="{{ path('app_note_new') }}" class="custom-button">Create new</a>
+{% endblock %}
